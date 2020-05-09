@@ -1,6 +1,6 @@
 # chunker
 
-### What does this project do?
+## What does this project do?
 
 This is a universal wrapper for application-level to use chunking in Go.
 The original chunker module is designed for [restic backup program](https://github.com/restic/restic).
@@ -11,7 +11,7 @@ You can find the chunker module from here: [restic/chunker](https://github.com/r
 
 
 
-### What is the default setting then?
+## What is the default setting then?
 
 Current setting for chunking are as follows:
 
@@ -39,7 +39,7 @@ chnker := chunker.New(reader)
 
 
 
-### Usage/Example
+## Usage/Example
 
 You can use chunker as bellow:
 
@@ -47,52 +47,51 @@ You can use chunker as bellow:
 package main
 
 import (
-	"crypto/sha256"
-	"fmt"
-	"io"
-	"os"
-	"test-go-mod/chunk"
+    "crypto/sha256"
+    "fmt"
+    "io"
+    "os"
+    "test-go-mod/chunk"
 )
 
 func main() {
-	fmt.Println("Starting to open file...")
+    fmt.Println("Starting to open file...")
 
-  // change your filename
-	filename := "test.bin"
-	reader, err := os.Open(filename)
-	if err != nil {
-		fmt.Println("Read error: ", err)
-		_ = reader.Close()
-		return
-	}
+    filename := "test.bin"
+    reader, err := os.Open(filename)
+    if err != nil {
+        fmt.Println("Read error: ", err)
+        _ = reader.Close()
+        return
+    }
 
-	chunker := chunk.New(reader)
+    chunker := chunk.New(reader)
 
-	var totalLength uint = 0
-	var averageLength uint = 0
-	var chunkNum uint = 0
+    var totalLength uint = 0
+    var averageLength uint = 0
+    var chunkNum uint = 0
 
 
-	for {
-		chunkInfo, err := chunker.Chunking()
-		if err == io.EOF {
-			fmt.Println("\nEOF. Exiting...")
-			fmt.Println("Total length = ", totalLength)
-			fmt.Println("Chunk Number = ", chunkNum)
-			if chunkNum != 0 {
-				averageLength = totalLength / chunkNum
-				fmt.Println("Average length = ", averageLength)
-			}
-			break
-		}
+    for {
+        chunkInfo, err := chunker.Chunking()
+        if err == io.EOF {
+            fmt.Println("\nEOF. Exiting...")
+            fmt.Println("Total length = ", totalLength)
+            fmt.Println("Chunk Number = ", chunkNum)
+            if chunkNum != 0 {
+                averageLength = totalLength / chunkNum
+                fmt.Println("Average length = ", averageLength)
+            }
+            break
+        }
 
-		if chunkInfo == nil {
-			panic("chunkInfo is nil!")
-		}
-		fmt.Printf("%d:\t%x\n", chunkInfo.Chunk.Length, chunkInfo.Digest)
-		totalLength += chunkInfo.Chunk.Length
-		chunkNum += 1
-	}
+        if chunkInfo == nil {
+            panic("chunkInfo is nil!")
+        }
+        fmt.Printf("%d:\t%x\n", chunkInfo.Chunk.Length, chunkInfo.Digest)
+        totalLength += chunkInfo.Chunk.Length
+        chunkNum += 1
+    }
 }
 ```
 
