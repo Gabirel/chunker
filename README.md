@@ -49,15 +49,15 @@ package main
 import (
     "crypto/sha256"
     "fmt"
+    chunk "github.com/Gabirel/chunker"
     "io"
     "os"
-    "test-go-mod/chunk"
 )
 
 func main() {
     fmt.Println("Starting to open file...")
 
-    filename := "test.bin"
+    filename := "test.txt"
     reader, err := os.Open(filename)
     if err != nil {
         fmt.Println("Read error: ", err)
@@ -70,7 +70,6 @@ func main() {
     var totalLength uint = 0
     var averageLength uint = 0
     var chunkNum uint = 0
-
 
     for {
         chunkInfo, err := chunker.Chunking()
@@ -92,6 +91,11 @@ func main() {
         totalLength += chunkInfo.Chunk.Length
         chunkNum += 1
     }
+
+    // which is OK
+    fmt.Printf("empty:\t%x\n", hashData(nil))
+    _ = reader.Close()
+
 }
 ```
 
