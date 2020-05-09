@@ -47,7 +47,6 @@ You can use chunker as bellow:
 package main
 
 import (
-    "crypto/sha256"
     "fmt"
     chunk "github.com/Gabirel/chunker"
     "io"
@@ -91,11 +90,6 @@ func main() {
         totalLength += chunkInfo.Chunk.Length
         chunkNum += 1
     }
-
-    // which is OK
-    fmt.Printf("empty:\t%x\n", hashData(nil))
-    _ = reader.Close()
-
 }
 ```
 
