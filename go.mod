@@ -1,4 +1,4 @@
-module chunker
+module github.com/Gabirel/chunker
 
 go 1.13
 
