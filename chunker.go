@@ -43,8 +43,10 @@ func NewWithBoundaries(rd io.Reader, minBits, maxBits, averageBits int) *Chunkin
     // The value comes from chunker_test.go
     pol := chunker.Pol(0x3DA3358B4DC173)
 
-    minChunkSize := uint(1 << minBits)
-    maxChunkSize := uint(1 << maxBits)
+    //minChunkSize := uint(1 << uint(minBits))
+    //maxChunkSize := uint(1 << uint(maxBits))
+    minChunkSize := uint(1 << uint(minBits))
+    maxChunkSize := uint(1 << uint(maxBits))
 
     chnker := chunker.NewWithBoundaries(rd, pol, minChunkSize, maxChunkSize)
     chnker.SetAverageBits(averageBits)
